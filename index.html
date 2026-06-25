@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SeniorSeguro - Proteção no Mundo Digital</title>
+  
+  <!-- Tailwind CSS para Estilização rápida e responsiva -->
+  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+  
+  <!-- Lucide Icons para carregar os ícones modernos -->
+  <script src="[https://unpkg.com/lucide@latest](https://unpkg.com/lucide@latest)"></script>
+  
+  <!-- Ligação com o seu arquivo de estilo local (CSS) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col transition-colors duration-200" id="app-body">
+
+  <!-- CABEÇALHO DO APLICATIVO -->
+  <header class="sticky top-0 z-30 px-4 py-4 flex flex-col md:flex-row justify-between items-center shadow-lg transition-colors bg-blue-600 text-white" id="app-header">
+    <div class="flex items-center gap-3 mb-4 md:mb-0">
+      <div class="p-2 bg-white/20 rounded-full">
+        <i data-lucide="shield" class="w-8 h-8 text-white"></i>
+      </div>
+      <div>
+        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight flex items-center gap-2">
+          SeniorSeguro
+        </h1>
+        <p class="text-xs md:text-sm text-white/90">Sua proteção no mundo digital</p>
+      </div>
+    </div>
+
+    <!-- BARRA DE ACESSIBILIDADE -->
+    <div class="flex flex-wrap items-center gap-3 bg-white/10 p-2 rounded-xl">
+      <span class="text-xs md:text-sm font-semibold text-white ml-1">Ajustar Tela:</span>
+      
+      <!-- Controle de Tamanho de Texto -->
+      <div class="flex bg-white/20 rounded-lg p-0.5" id="text-size-controls">
+        <button onclick="changeTextSize('normal')" id="btn-size-normal" class="px-3 py-1 text-xs rounded-md font-bold transition-all text-white hover:bg-white/10">
+          A
+        </button>
+        <button onclick="changeTextSize('large')" id="btn-size-large" class="px-3 py-1 text-sm rounded-md font-bold transition-all bg-white text-blue-800 shadow-sm">
+          A+
+        </button>
+        <button onclick="changeTextSize('huge')" id="btn-size-huge" class="px-3 py-1 text-base rounded-md font-bold transition-all text-white hover:bg-white/10">
+          A++
+        </button>
+      </div>
+
+      <!-- Botão de Alto Contraste -->
+      <button onclick="toggleHighContrast()" id="btn-contrast" class="px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold flex items-center gap-1.5 transition-all bg-zinc-800 text-white hover:bg-zinc-700 border border-white/20">
+        🌓 Contrastes
+      </button>
+    </div>
+  </header>
+
+  <!-- ÁREA DE CONTEÚDO PRINCIPAL (Modificada dinamicamente via script.js) -->
+  <main class="flex-grow max-w-4xl w-full mx-auto p-4 md:p-6 mb-24 text-lg" id="main-content">
+    
+    <!-- TELA 1: INÍCIO (DASHBOARD) -->
+    <section id="tab-home" class="space-y-6">
+      <!-- Boas-vindas -->
+      <div class="p-6 rounded-2xl bg-white shadow-md border border-slate-100 transition-colors duration-200 card-style">
+        <div class="flex flex-col md:flex-row gap-5 items-center">
+          <div class="bg-emerald-100 p-4 rounded-full text-emerald-600 flex-shrink-0">
+            <i data-lucide="user-check" class="w-12 h-12"></i>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold mb-2 section-title">Olá! Que bom ter você aqui!</h2>
+            <p class="leading-relaxed opacity-90">
+              O mundo digital pode parecer confuso às vezes, mas não se preocupe! Com o <strong class="text-blue-600 accent-text">SeniorSeguro</strong>, você vai aprender a se proteger de golpes no WhatsApp, ligações suspeitas e muito mais, tudo de forma muito calma, alegre e no seu tempo!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid de Ações Rápidas -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- Botão ir para Jogo -->
+        <button onclick="switchTab('simulator')" class="p-6 rounded-2xl text-left transition-all hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-400 bg-white shadow-md border border-slate-100 card-style">
+          <span class="inline-block p-3 rounded-xl bg-orange-100 text-orange-600 mb-4">
+            <i data-lucide="play" class="w-8 h-8"></i>
+          </span>
+          <h3 class="text-xl font-semibold mb-2 flex items-center gap-2 section-subtitle">
+            Jogo "Golpe ou Seguro?" <span class="text-xs bg-orange-200 text-orange-800 px-2.5 py-0.5 rounded-full font-bold">Interativo</span>
+          </h3>
+          <p class="opacity-80 text-base">
+            Treine sua percepção e aprenda a identificar mensagens seguras e tentativas de golpes reais recebidas no celular.
+          </p>
+          <div class="mt-4 font-bold flex items-center gap-1 text-sm text-blue-600 accent-text">
+            Começar a jogar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </button>
+
+        <!-- Botão ir para Guias -->
+        <button onclick="switchTab('guides')" class="p-6 rounded-2xl text-left transition-all hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-400 bg-white shadow-md border border-slate-100 card-style">
+          <span class="inline-block p-3 rounded-xl bg-purple-100 text-purple-600 mb-4">
+            <i data-lucide="book-open" class="w-8 h-8"></i>
+          </span>
+          <h3 class="text-xl font-semibold mb-2 section-subtitle">Guias de Segurança</h3>
+          <p class="opacity-80 text-base">
+            Passo a passo bem detalhado sobre como criar senhas fortes, comprar na internet e usar o WhatsApp com segurança.
+          </p>
+          <div class="mt-4 font-bold flex items-center gap-1 text-sm text-blue-600 accent-text">
+            Ver os guias <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </button>
+
+        <!-- Botão ir para Chatbot -->
+        <button onclick="switchTab('chatbot')" class="p-6 rounded-2xl text-left transition-all hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-400 bg-white shadow-md border border-slate-100 card-style">
+          <span class="inline-block p-3 rounded-xl bg-cyan-100 text-cyan-600 mb-4">
+            <i data-lucide="sparkles" class="w-8 h-8"></i>
+          </span>
+          <h3 class="text-xl font-semibold mb-2 flex items-center gap-2 section-subtitle">
+            Perguntar ao Assistente <span class="text-xs bg-cyan-200 text-cyan-800 px-2.5 py-0.5 rounded-full font-bold">Inteligência Artificial</span>
+          </h3>
+          <p class="opacity-80 text-base">
+            Tem uma dúvida específica? Quer saber se uma mensagem que você recebeu é segura? Pergunte ao nosso robô assistente paciente.
+          </p>
+          <div class="mt-4 font-bold flex items-center gap-1 text-sm text-blue-600 accent-text">
+            Tirar minhas dúvidas <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </button>
+
+        <!-- Botão ir para Emergência -->
+        <button onclick="switchTab('emergency')" class="p-6 rounded-2xl text-left transition-all hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-400 bg-white shadow-md border border-slate-100 card-style">
+          <span class="inline-block p-3 rounded-xl bg-rose-100 text-rose-600 mb-4">
+            <i data-lucide="alert-triangle" class="w-8 h-8"></i>
+          </span>
+          <h3 class="text-xl font-semibold mb-2 section-subtitle">Preciso de Ajuda Agora!</h3>
+          <p class="opacity-80 text-base">
+            Foi vítima de um golpe ou está desconfiado? Copie mensagens de ajuda rapidamente para enviar a familiares e veja telefones úteis.
+          </p>
+          <div class="mt-4 font-bold flex items-center gap-1 text-sm text-blue-600 accent-text">
+            Abrir socorro <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </button>
+
+      </div>
+
+      <!-- Dica do Dia -->
+      <div class="p-6 rounded-2xl border-l-8 border-yellow-500 bg-white shadow-md border border-slate-100 card-style">
+        <h3 class="text-xl font-semibold flex items-center gap-2 mb-2 section-subtitle">
+          💡 Regra de Ouro da Segurança Digital
+        </h3>
+        <p class="italic opacity-95 leading-relaxed text-base md:text-lg">
+          "Se a mensagem parece muito boa para ser verdade (como um prêmio que você não concorreu) ou muito assustadora (como um bloqueio imediato de conta), PARE, RESPIRE e não tome nenhuma decisão com pressa. Ligue para alguém de sua extrema confiança antes de fazer qualquer coisa."
+        </p>
+      </div>
+
+      <!-- Dicionário / Glossário -->
+      <div class="p-6 rounded-2xl bg-white shadow-md border border-slate-100 card-style">
+        <h3 class="text-2xl font-bold mb-4 flex items-center gap-2 section-title">
+          <i data-lucide="help-circle" class="w-6 h-6 text-indigo-500"></i>
+          Dicionário da Internet: O que significa?
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="glossary-container">
+          <!-- Inserido dinamicamente via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 2: JOGO SIMULADOR "GOLPE OU SEGURO" -->
+    <section id="tab-simulator" class="space-y-6 hidden">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h2 class="text-2xl font-bold section-title">Jogo Treinamento: Golpe ou Seguro?</h2>
+          <p class="text-base opacity-80">Analise os casos abaixo e escolha se a mensagem é um golpe perigoso ou se ela é segura para abrir.</p>
+        </div>
+        <div class="flex items-center gap-3 bg-blue-100 px-4 py-2 rounded-xl border border-blue-200 self-stretch md:self-auto justify-between" id="score-badge">
+          <span class="font-bold text-sm text-slate-600" id="score-label">Pontuação Atual:</span>
+          <span class="bg-blue-600 text-white px-3 py-1 rounded-full font-bold text-lg" id="current-score">0 / 5</span>
+        </div>
+      </div>
+
+      <!-- Quadro de Cenário -->
+      <div class="p-6 rounded-3xl bg-white shadow-md border border-slate-100 relative overflow-hidden card-style">
+        <!-- Barra de Progresso -->
+        <div class="absolute top-0 left-0 w-full h-2 bg-slate-200">
+          <div class="h-full bg-blue-600 transition-all duration-300" id="simulator-progress" style="width: 20%;"></div>
+        </div>
+
+        <div class="flex justify-between items-center mb-6 mt-2">
+          <span id="scenario-counter" class="text-xs md:text-sm font-semibold tracking-wider uppercase px-3 py-1 rounded-full bg-slate-100 text-slate-600">
+            Cenário 1 de 5
+          </span>
+          <span class="flex items-center gap-1.5 text-xs md:text-sm font-medium text-slate-500">
+            <i data-lucide="smartphone" class="w-4 h-4"></i> Simulação de Celular
+          </span>
+        </div>
+
+        <!-- Tela Simulação de Celular -->
+        <div class="bg-slate-100 rounded-2xl p-4 md:p-6 mb-6 max-w-lg mx-auto border-2 border-slate-200 shadow-inner" id="phone-container">
+          <div class="flex items-center gap-3 border-b border-slate-200 pb-3 mb-3">
+            <div id="sender-avatar" class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-lg">
+              N
+            </div>
+            <div>
+              <h4 id="sender-name" class="font-bold text-slate-800 text-base md:text-lg">Remetente</h4>
+              <span class="text-xs text-slate-400">Mensagem recebida agora</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl rounded-tl-none p-4 text-slate-800 shadow-sm border border-slate-200/50">
+            <p id="scenario-message" class="leading-relaxed font-sans text-base md:text-lg">
+              Mensagem de simulação...
+            </p>
+            <span class="block text-right text-xs text-slate-400 mt-2">12:00</span>
+          </div>
+        </div>
+
+        <!-- Botões de Ação para o Usuário -->
+        <div id="sim-actions-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto">
+          <button onclick="submitAnswer(true)" class="p-4 rounded-xl bg-red-500 hover:bg-red-600 text-white flex items-center justify-center gap-2 font-bold text-lg transition-transform hover:scale-105 active:scale-95" id="btn-scam-action">
+            <i data-lucide="alert-triangle" class="w-6 h-6"></i> É GOLPE! Perigo 🛑
+          </button>
+          <button onclick="submitAnswer(false)" class="p-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center gap-2 font-bold text-lg transition-transform hover:scale-105 active:scale-95" id="btn-safe-action">
+            <i data-lucide="check-circle-2" class="w-6 h-6"></i> É SEGURO! Confiar ✅
+          </button>
+        </div>
+
+        <!-- Painel de Explicação (Oculto inicialmente) -->
+        <div id="explanation-panel" class="mt-4 p-5 rounded-2xl bg-slate-100 border border-slate-300/50 hidden">
+          <div class="flex items-center gap-3 mb-4">
+            <div id="feedback-headline" class="flex items-center gap-2 font-extrabold text-xl">
+              <!-- Preenchido pelo JS -->
+            </div>
+          </div>
+
+          <h4 id="explanation-title" class="font-extrabold text-lg mb-2 text-slate-900">
+            Título explicativo
+          </h4>
+          <p id="explanation-text" class="mb-4 leading-relaxed text-base md:text-lg">
+            Explicação detalhada...
+          </p>
+
+          <div id="explanation-tip" class="p-3 bg-yellow-100 text-yellow-800 rounded-xl border border-yellow-200 font-medium text-sm md:text-base">
+            Dica de ouro...
+          </div>
+
+          <div class="mt-6 flex justify-end">
+            <button onclick="advanceScenario()" class="px-6 py-3 rounded-xl font-extrabold text-base flex items-center gap-2 transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-md" id="btn-next-scenario">
+              Próximo Desafio <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TELA 3: GUIAS PASSO A PASSO -->
+    <section id="tab-guides" class="space-y-6 hidden">
+      <div>
+        <h2 class="text-2xl font-bold section-title">Guias de Segurança Passo a Passo</h2>
+        <p class="text-base opacity-80">Tutoriais bem explicados, simples e diretos para o seu cotidiano.</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6" id="guides-container">
+        <!-- Inserido dinamicamente via JS -->
+      </div>
+    </section>
+
+    <!-- TELA 4: CHATBOT / ASSISTENTE IA -->
+    <section id="tab-chatbot" class="space-y-6 hidden">
+      <div>
+        <h2 class="text-2xl font-bold section-title">Assistente de Dúvidas de Segurança</h2>
+        <p class="text-base opacity-80">
+          Você recebeu uma mensagem suspeita? Escreva-a abaixo ou pergunte algo livremente sobre segurança digital. Nosso assistente vai ajudar você!
+        </p>
+      </div>
+
+      <div class="p-4 rounded-2xl flex flex-col h-[500px] bg-white shadow-md border border-slate-100 card-style">
+        
+        <!-- Alerta de Segurança -->
+        <div class="p-3 bg-blue-50 text-blue-800 rounded-xl mb-4 text-xs md:text-sm flex items-center gap-2" id="chat-alert">
+          <i data-lucide="sparkles" class="w-5 h-5 flex-shrink-0"></i>
+          <span>Conselho: Nunca envie senhas inteiras ou dados bancários privados aqui na conversa.</span>
+        </div>
+
+        <!-- Área de Conversação -->
+        <div class="flex-grow overflow-y-auto space-y-4 p-2 mb-4" id="chat-log">
+          <!-- Mensagens iniciais do bot e usuário são criadas aqui -->
+        </div>
+
+        <!-- Formulário de Envio -->
+        <form onsubmit="sendChatMessage(event)" class="flex gap-2">
+          <input
+            type="text"
+            id="chat-input-field"
+            placeholder="Escreva sua dúvida ou copie a mensagem suspeita aqui..."
+            class="flex-grow px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800 bg-white"
+          />
+          <button
+            type="submit"
+            id="chat-submit-btn"
+            class="px-5 py-3 rounded-xl font-bold flex items-center gap-1.5 transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-md"
+          >
+            Perguntar
+          </button>
+        </form>
+
+      </div>
+
+      <!-- Perguntas Sugeridas -->
+      <div class="space-y-2">
+        <span class="block text-sm font-bold uppercase tracking-wider opacity-70">Exemplos de perguntas rápidas:</span>
+        <div class="flex flex-wrap gap-2" id="suggested-queries">
+          <!-- Inserido dinamicamente via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 5: CENTRAL DE AJUDA / SOCORRO -->
+    <section id="tab-emergency" class="space-y-6 hidden">
+      <div>
+        <h2 class="text-2xl font-bold section-title">Preciso de Ajuda / Central de Socorro</h2>
+        <p class="text-base opacity-80">
+          Se você acha que caiu em um golpe ou está com muito medo de algo que aconteceu, use os recursos desta página imediatamente.
+        </p>
+      </div>
+
+      <!-- Gerador de Mensagem de Ajuda -->
+      <div class="p-6 rounded-2xl bg-white shadow-md border border-slate-100 card-style">
+        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 section-subtitle">
+          💬 Avisar sua Família Rapidamente
+        </h3>
+        <p class="mb-4 opacity-90 text-base">
+          Gere uma mensagem com as suas dúvidas ou avisando sobre o problema, copie o texto e cole para mandar no WhatsApp de um filho, neto ou pessoa de confiança.
+        </p>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-bold mb-1 opacity-80">Nome do Parente de Confiança (Opcional):</label>
+            <input
+              type="text"
+              id="family-contact-name"
+              oninput="updateEmergencyMessage()"
+              placeholder="Ex: Minha filha Julia, Meu neto Rodrigo..."
+              class="w-full px-4 py-2 rounded-lg border border-slate-300 text-slate-800"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-bold mb-1 opacity-80">Escolha o Tipo de Mensagem que deseja enviar:</label>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
+              <button onclick="setTemplateMessage(0)" id="tpl-btn-0" class="p-3 rounded-lg text-left text-sm font-semibold transition-all border bg-blue-100 border-blue-500 text-blue-900 font-extrabold">
+                Dúvida Geral
+              </button>
+              <button onclick="setTemplateMessage(1)" id="tpl-btn-1" class="p-3 rounded-lg text-left text-sm font-semibold transition-all border bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100">
+                Mensagem Suspeita
+              </button>
+              <button onclick="setTemplateMessage(2)" id="tpl-btn-2" class="p-3 rounded-lg text-left text-sm font-semibold transition-all border bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100">
+                Acho que caí em Golpe
+              </button>
+            </div>
+          </div>
+
+          <!-- Caixa de Visualização da Mensagem -->
+          <div class="p-4 rounded-xl bg-slate-100 border border-slate-300">
+            <span class="block text-xs font-bold text-blue-600 mb-2 uppercase tracking-wider accent-text">Texto Pronto para Enviar:</span>
+            <p id="generated-message-preview" class="text-slate-800 font-serif whitespace-pre-line text-base md:text-lg leading-relaxed bg-white p-3 rounded-lg border">
+              Oi, tudo bem? Estou com uma dúvida sobre segurança aqui no meu celular. Pode me dar uma ajuda rapidinho?
+            </p>
+          </div>
+
+          <!-- Botão Copiar -->
+          <button onclick="copyGeneratedMessage()" id="btn-copy-msg" class="w-full py-4 rounded-xl font-extrabold text-lg flex items-center justify-center gap-2 transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-md">
+            <i data-lucide="copy" class="w-6 h-6"></i> Copiar Mensagem Pronta
+          </button>
+        </div>
+      </div>
+
+      <!-- Telefones e Contatos -->
+      <div class="p-6 rounded-2xl bg-white shadow-md border border-slate-100 card-style">
+        <h3 class="text-xl font-semibold text-red-600 mb-4 flex items-center gap-2 section-subtitle" id="emergency-title">
+          🚨 Telefones e Ações Recomendadas
+        </h3>
+        
+        <div class="space-y-4">
+          <!-- Ação Bancária -->
+          <div class="p-4 rounded-xl border border-red-200 bg-red-50/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-box-accent">
+            <div>
+              <h4 class="font-bold text-red-700 text-lg mb-1" id="bank-action-title">Passou dados bancários ou fez Pix?</h4>
+              <p class="text-sm opacity-90">
+                Ligue imediatamente para o SAC do seu banco (o número de telefone está atrás do seu cartão físico) e informe o ocorrido para bloquear transações.
+              </p>
+            </div>
+          </div>
+
+          <!-- PM -->
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-100/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-box-normal">
+            <div>
+              <h4 class="font-bold text-slate-800 text-lg mb-1">Polícia Militar - Emergências</h4>
+              <p class="text-sm opacity-90">
+                Se houver ameaças físicas, estorsões imediatas ou assaltos presenciais, ligue para a Polícia Militar.
+              </p>
+            </div>
+            <a href="tel:190" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xl px-4 py-2 rounded-xl flex items-center gap-2 flex-shrink-0">
+              <i data-lucide="phone" class="w-5 h-5"></i> 190
+            </a>
+          </div>
+
+          <!-- Polícia Civil -->
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-100/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-box-normal">
+            <div>
+              <h4 class="font-bold text-slate-800 text-lg mb-1">Delegacia de Polícia Civil</h4>
+              <p class="text-sm opacity-90">
+                Para registrar um Boletim de Ocorrência sobre o golpe financeiro ou roubo de contas virtuais na internet.
+              </p>
+            </div>
+            <a href="tel:197" class="bg-slate-700 hover:bg-slate-800 text-white font-extrabold text-xl px-4 py-2 rounded-xl flex items-center gap-2 flex-shrink-0">
+              <i data-lucide="phone" class="w-5 h-5"></i> 197
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BARRA DE NAVEGAÇÃO INFERIOR PARA TOQUE FÁCIL -->
+  <nav class="fixed bottom-0 left-0 w-full z-40 border-t shadow-2xl flex justify-around items-center px-2 py-3 bg-white border-slate-200" id="bottom-navigation">
+    
+    <!-- Início -->
+    <button onclick="switchTab('home')" id="nav-btn-home" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all focus:outline-none text-blue-600 bg-blue-50 font-bold" style="min-width: 70px; min-height: 60px;">
+      <i data-lucide="shield" class="w-6 h-6 mb-1"></i>
+      <span class="text-xs font-semibold">Início</span>
+    </button>
+
+    <!-- Simulador -->
+    <button onclick="switchTab('simulator')" id="nav-btn-simulator" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all focus:outline-none text-slate-500 hover:text-slate-800" style="min-width: 70px; min-height: 60px;">
+      <i data-lucide="play" class="w-6 h-6 mb-1"></i>
+      <span class="text-xs font-semibold">Golpe?</span>
+    </button>
+
+    <!-- Guias -->
+    <button onclick="switchTab('guides')" id="nav-btn-guides" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all focus:outline-none text-slate-500 hover:text-slate-800" style="min-width: 70px; min-height: 60px;">
+      <i data-lucide="book-open" class="w-6 h-6 mb-1"></i>
+      <span class="text-xs font-semibold">Guias</span>
+    </button>
+
+    <!-- Dúvidas -->
+    <button onclick="switchTab('chatbot')" id="nav-btn-chatbot" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all focus:outline-none text-slate-500 hover:text-slate-800" style="min-width: 70px; min-height: 60px;">
+      <i data-lucide="message-square" class="w-6 h-6 mb-1"></i>
+      <span class="text-xs font-semibold">Dúvidas</span>
+    </button>
+
+    <!-- Socorro -->
+    <button onclick="switchTab('emergency')" id="nav-btn-emergency" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all focus:outline-none text-red-500/70 hover:text-red-600" style="min-width: 70px; min-height: 60px;">
+      <i data-lucide="alert-triangle" class="w-6 h-6 mb-1"></i>
+      <span class="text-xs font-semibold">Socorro</span>
+    </button>
+
+  </nav>
+
+  <!-- Ligação com a sua lógica local (JavaScript) -->
+  <script src="script.js" defer></script>
+</body>
+</html>
