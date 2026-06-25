@@ -1,11 +1,11 @@
 /* --- ESTILOS ADICIONAIS E ACESSIBILIDADE --- */
 
-/* Transições suaves gerais */
+/* Transicoes suaves gerais */
 .transition-colors {
   transition: background-color 0.2s, border-color 0.2s, color 0.2s;
 }
 
-/* Customização de Scrollbar para leitura confortável */
+/* Customizacao de Scrollbar para leitura confortavel */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -25,5 +25,7 @@ button, input, textarea {
   outline: none;
 }
 button:focus-visible {
-  outline: 4px solid #3b82f6; /* Destaque para navegação por teclado */
+  outline: 4px solid #3b82f6; /* Destaque para navegacao por teclado */
 }
+
+
