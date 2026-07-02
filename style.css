@@ -1,6 +1,7 @@
 /* Estilos focados em acessibilidade extrema para miopia */
 :root {
-  --text-scale: 1.1; /* Escala inicial de texto aumentada */
+  --text-scale: 1.1;
+  /* Escala inicial de texto aumentada */
 }
 
 body {
@@ -10,7 +11,8 @@ body {
 
 /* Classes de alto contraste customizadas */
 .theme-light {
-  background-color: #FDFBF7; /* Fundo creme suave que cansa menos os olhos */
+  background-color: #FDFBF7;
+  /* Fundo creme suave que cansa menos os olhos */
   color: #111827;
 }
 
@@ -19,21 +21,29 @@ body {
   background-color: #0F172A !important;
   color: #F8FAFC !important;
 }
-.theme-dark .bg-white, .theme-dark .bg-slate-50, .theme-dark .bg-gray-100 {
+
+.theme-dark .bg-white,
+.theme-dark .bg-slate-50,
+.theme-dark .bg-gray-100 {
   background-color: #1E293B !important;
   color: #F8FAFC !important;
   border-color: #334155 !important;
 }
-.theme-dark .text-black, .theme-dark .text-gray-700, .theme-dark .text-gray-800, .theme-dark .text-gray-900 {
+
+.theme-dark .text-black,
+.theme-dark .text-gray-700,
+.theme-dark .text-gray-800,
+.theme-dark .text-gray-900 {
   color: #E2E8F0 !important;
 }
+
 .theme-dark header {
   background-color: #B45309 !important;
   border-color: #78350F !important;
 }
 
 /* Ajustes MODO ALTO CONTRASTE (Força bruta sobre o Tailwind) */
-.theme-high-contrast, 
+.theme-high-contrast,
 .theme-high-contrast * {
   background-color: #000000 !important;
   color: #FFFF00 !important;
@@ -42,8 +52,8 @@ body {
 }
 
 /* Garantir contornos em elementos interativos no Alto Contraste */
-.theme-high-contrast button, 
-.theme-high-contrast a, 
+.theme-high-contrast button,
+.theme-high-contrast a,
 .theme-high-contrast input,
 .theme-high-contrast .border-4 {
   border: 3px solid #FFFF00 !important;
