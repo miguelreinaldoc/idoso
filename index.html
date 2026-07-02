@@ -3,458 +3,935 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SeniorSeguro - Protecao no Mundo Digital</title>
-  
-  <!-- Tailwind CSS para Estilizacao rapida e responsiva -->
-  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-  
-  <!-- Lucide Icons para carregar os icones modernos -->
-  <script src="[https://unpkg.com/lucide@latest](https://unpkg.com/lucide@latest)"></script>
-  
-  <!-- Ligacao com o seu arquivo de estilo local (CSS) -->
-  <link rel="stylesheet" href="style.css">
+  <title>Guardião Digital - Segurança para Idosos</title>
+  <!-- Tailwind CSS para estilização moderna e responsiva -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons para ícones bonitos e legíveis -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Estilos focados em acessibilidade extrema para miopia */
+    :root {
+      --text-scale: 1.1; /* Escala inicial de texto aumentada */
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Classes de alto contraste customizadas */
+    .theme-light {
+      background-color: #FDFBF7; /* Fundo creme suave que cansa menos os olhos */
+      color: #111827;
+    }
+    
+    /* Ajustes MODO ESCURO para sobrepor o Tailwind */
+    .theme-dark {
+      background-color: #0F172A !important;
+      color: #F8FAFC !important;
+    }
+    .theme-dark .bg-white, .theme-dark .bg-slate-50, .theme-dark .bg-gray-100 {
+      background-color: #1E293B !important;
+      color: #F8FAFC !important;
+      border-color: #334155 !important;
+    }
+    .theme-dark .text-black, .theme-dark .text-gray-700, .theme-dark .text-gray-800, .theme-dark .text-gray-900 {
+      color: #E2E8F0 !important;
+    }
+    .theme-dark header {
+      background-color: #B45309 !important;
+      border-color: #78350F !important;
+    }
+
+    /* Ajustes MODO ALTO CONTRASTE (Força bruta sobre o Tailwind) */
+    .theme-high-contrast, 
+    .theme-high-contrast * {
+      background-color: #000000 !important;
+      color: #FFFF00 !important;
+      border-color: #FFFF00 !important;
+      box-shadow: none !important;
+    }
+    
+    /* Garantir contornos em elementos interativos no Alto Contraste */
+    .theme-high-contrast button, 
+    .theme-high-contrast a, 
+    .theme-high-contrast input,
+    .theme-high-contrast .border-4 {
+      border: 3px solid #FFFF00 !important;
+    }
+
+    /* Foco acessível por teclado */
+    *:focus-visible {
+      outline: 4px solid #F59E0B !important;
+      outline-offset: 4px;
+    }
+
+    /* Toques grandes e confortáveis para mãos trêmulas ou idosos */
+    .big-target {
+      min-height: 56px;
+      padding: 14px 24px;
+    }
+
+    /* Linhas de leitura guiada opcionais */
+    .reading-line {
+      border-bottom: 2px dashed #D1D5DB;
+    }
+
+    /* Transição suave de modais */
+    .modal-overlay {
+      background-color: rgba(0, 0, 0, 0.75);
+    }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col transition-colors duration-200" id="corpo-app">
+<body class="theme-light min-h-screen flex flex-col pb-12" id="appBody">
 
-  <!-- CABECALHO DO APLICATIVO -->
-  <header class="sticky top-0 z-30 px-4 py-4 flex flex-col md:flex-row justify-between items-center shadow-lg transition-colors bg-blue-600 text-white" id="cabecalho-app">
-    <div class="flex items-center gap-3 mb-4 md:mb-0">
-      <div class="p-2 bg-white/20 rounded-full">
-        <i data-lucide="shield" class="w-8 h-8 text-white"></i>
+  <!-- BARRA DE ACESSIBILIDADE DE TOPO (Fixa para fácil alcance) -->
+  <header class="sticky top-0 z-40 bg-amber-500 text-black shadow-md border-b-4 border-amber-600">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <i data-lucide="shield-check" class="w-8 h-8 md:w-10 md:h-10 text-black"></i>
+        <span class="text-xl md:text-2xl font-black tracking-wide">Guardião Digital</span>
       </div>
-      <div>
-        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight flex items-center gap-2">
-          SeniorSeguro
-        </h1>
-        <p class="text-xs md:text-sm text-white/90">Sua protecao no mundo digital</p>
-      </div>
-    </div>
-
-    <!-- BARRA DE ACESSIBILIDADE -->
-    <div class="flex flex-wrap items-center gap-3 bg-white/10 p-2 rounded-xl">
-      <span class="text-xs md:text-sm font-semibold text-white ml-1">Ajustar Tela:</span>
       
-      <!-- Controle de Tamanho de Texto -->
-      <div class="flex bg-white/20 rounded-lg p-0.5" id="controles-tamanho-texto">
-        <button onclick="mudarTamanhoTexto('normal')" id="btn-tamanho-normal" class="px-3 py-1 text-xs rounded-md font-bold transition-all text-white hover:bg-white/10">
-          A
+      <!-- Painel de Controles -->
+      <div class="flex flex-wrap items-center gap-2">
+        <!-- Controles de Tamanho de Fonte -->
+        <div class="flex items-center bg-white rounded-lg p-1 border-2 border-black">
+          <button onclick="changeFontSize(-0.1)" class="p-2 hover:bg-gray-200 rounded text-black font-bold flex items-center justify-center" aria-label="Diminuir tamanho da letra" style="min-width: 44px; min-height: 44px;">
+            <span class="text-sm font-bold">A-</span>
+          </button>
+          <div class="h-6 w-[1px] bg-gray-300 mx-1"></div>
+          <button onclick="resetFontSize()" class="px-2 py-1 hover:bg-gray-200 rounded text-black font-semibold text-xs" style="min-height: 44px;">Normal</button>
+          <div class="h-6 w-[1px] bg-gray-300 mx-1"></div>
+          <button onclick="changeFontSize(0.1)" class="p-2 hover:bg-gray-200 rounded text-black font-bold flex items-center justify-center" aria-label="Aumentar tamanho da letra" style="min-width: 44px; min-height: 44px;">
+            <span class="text-lg font-bold">A+</span>
+          </button>
+        </div>
+
+        <!-- Seletor de Tema/Contraste -->
+        <button onclick="toggleTheme()" class="bg-black text-white px-3 py-2 rounded-lg font-bold border-2 border-white flex items-center gap-2 hover:bg-gray-800" style="min-height: 48px;" aria-label="Mudar contraste da tela">
+          <i data-lucide="eye" class="w-6 h-6"></i>
+          <span class="text-sm">Contraste</span>
         </button>
-        <button onclick="mudarTamanhoTexto('large')" id="btn-tamanho-grande" class="px-3 py-1 text-sm rounded-md font-bold transition-all bg-white text-blue-800 shadow-sm">
-          A+
-        </button>
-        <button onclick="mudarTamanhoTexto('huge')" id="btn-tamanho-gigante" class="px-3 py-1 text-base rounded-md font-bold transition-all text-white hover:bg-white/10">
-          A++
+
+        <!-- Leitor de Tela Integrado (Liga/Desliga Voz) -->
+        <button id="ttsToggleBtn" onclick="toggleAudioAssistant()" class="bg-emerald-700 text-white px-3 py-2 rounded-lg font-bold border-2 border-white flex items-center gap-2 hover:bg-emerald-800" style="min-height: 48px;" aria-label="Ativar leitura por áudio">
+          <i data-lucide="volume-2" class="w-6 h-6" id="ttsIcon"></i>
+          <span class="text-sm" id="ttsText">Som Desativado</span>
         </button>
       </div>
-
-      <!-- Botao de Alto Contraste -->
-      <button onclick="alternarAltoContraste()" id="btn-contraste" class="px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold flex items-center gap-1.5 transition-all bg-zinc-800 text-white hover:bg-zinc-700 border border-white/20">
-        Substituir contraste 🌓
-      </button>
     </div>
   </header>
 
-  <!-- AREA DE CONTEUDO PRINCIPAL (Modificada dinamicamente via script.js) -->
-  <main class="flex-grow max-w-4xl w-full mx-auto p-4 md:p-6 mb-24 text-lg" id="conteudo-principal">
+  <!-- BANNER DE BOAS-VINDAS E AUDIO ASSISTENTE ATIVO -->
+  <div id="welcomeBanner" class="bg-blue-100 text-blue-900 border-b border-blue-200 py-3 px-4 text-center">
+    <div class="max-w-3xl mx-auto flex items-center justify-center gap-2">
+      <i data-lucide="info" class="w-6 h-6 flex-shrink-0"></i>
+      <p class="font-semibold text-lg" id="welcomeText">
+        👋 Bem-vindo! Este aplicativo foi feito para você ler ou ouvir com letras grandes. Clique em qualquer texto ou dica para que eu leia para você!
+      </p>
+    </div>
+  </div>
+
+  <!-- CONTEÚDO PRINCIPAL (Centralizado e fluido) -->
+  <main class="max-w-4xl w-full mx-auto px-4 mt-6 flex-grow" id="mainContent">
     
-    <!-- TELA 1: INICIO (PAINEL PRINCIPAL) -->
-    <section id="aba-inicio" class="space-y-6">
-      <!-- Boas-vindas -->
-      <div class="p-6 rounded-2xl bg-white shadow-md border border-slate-100 transition-colors duration-200 estilo-card">
-        <div class="flex flex-col md:flex-row gap-5 items-center">
-          <div class="bg-emerald-100 p-4 rounded-full text-emerald-600 flex-shrink-0">
-            <i data-lucide="user-check" class="w-12 h-12"></i>
-          </div>
+    <!-- MENU DE NAVEGAÇÃO / ABAS GRANDES -->
+    <nav class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8" aria-label="Navegação Principal">
+      <button onclick="switchTab('dicas')" id="tabBtn-dicas" class="big-target flex items-center justify-center gap-3 border-4 rounded-xl font-black text-xl transition-all shadow-md bg-amber-500 border-black text-black">
+        <i data-lucide="book-open" class="w-7 h-7"></i>
+        <span>1. Aprender</span>
+      </button>
+      <button onclick="switchTab('jogo')" id="tabBtn-jogo" class="big-target flex items-center justify-center gap-3 border-4 rounded-xl font-black text-xl transition-all shadow-md bg-white border-gray-300 text-gray-700 hover:border-black hover:text-black">
+        <i data-lucide="gamepad-2" class="w-7 h-7"></i>
+        <span>2. Jogar & Treinar</span>
+      </button>
+      <button onclick="switchTab('ajuda')" id="tabBtn-ajuda" class="big-target flex items-center justify-center gap-3 border-4 rounded-xl font-black text-xl transition-all shadow-md bg-white border-gray-300 text-gray-700 hover:border-black hover:text-black">
+        <i data-lucide="phone-call" class="w-7 h-7"></i>
+        <span>3. Telefones Úteis</span>
+      </button>
+    </nav>
+
+    <!-- ================= ABA 1: APRENDER (DICAS DE SEGURANÇA) ================= -->
+    <section id="tab-dicas" class="space-y-6">
+      <div class="text-center md:text-left mb-6">
+        <h1 class="text-3xl md:text-4xl font-extrabold mb-2" onclick="readAloud(this.innerText)">Selecione um tema para aprender:</h1>
+        <p class="text-xl opacity-90" onclick="readAloud(this.innerText)">Clique no cartão para ler as regras de ouro e se proteger de fraudes.</p>
+      </div>
+
+      <!-- Grid de Cartões Grandes -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Cartão 1: Golpes de Whatsapp -->
+        <button onclick="openTipModal('whatsapp')" class="text-left bg-white text-black p-6 rounded-2xl border-4 border-emerald-600 hover:border-black hover:shadow-lg transition-all flex flex-col justify-between group">
           <div>
-            <h2 class="text-2xl font-bold mb-2 titulo-secao">Ola! Que bom ter voce aqui!</h2>
-            <p class="leading-relaxed opacity-90">
-              O mundo digital pode parecer confuso as vezes, mas nao se preocupe! Com o <strong class="text-blue-600 texto-destaque">SeniorSeguro</strong>, voce vai aprender a se proteger de golpes no WhatsApp, ligacoes suspeitas e muito mais, tudo de forma muito calma, alegre e no seu tempo!
+            <div class="flex items-center gap-3 mb-4">
+              <span class="p-3 bg-emerald-100 rounded-xl text-emerald-700 group-hover:bg-emerald-200">
+                <i data-lucide="message-square" class="w-10 h-10"></i>
+              </span>
+              <h2 class="text-2xl font-black text-emerald-800" onclick="event.stopPropagation(); readAloud(this.innerText)">Falsos Parentes (WhatsApp)</h2>
+            </div>
+            <p class="text-lg leading-relaxed text-gray-700" onclick="event.stopPropagation(); readAloud(this.innerText)">
+              Alguém finge ser seu filho ou neto com um número novo pedindo dinheiro urgente? Cuidado! Saiba como reagir.
             </p>
           </div>
-        </div>
-      </div>
-
-      <!-- Grid de Acoes Rapidas -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        
-        <!-- Botao ir para Jogo -->
-        <button onclick="mudarAba('simulador')" class="p-6 rounded-2xl text-left transition-all hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-400 bg-white shadow-md border border-slate-100 estilo-card">
-          <span class="inline-block p-3 rounded-xl bg-orange-100 text-orange-600 mb-4">
-            <i data-lucide="play" class="w-8 h-8"></i>
+          <span class="mt-6 inline-flex items-center gap-2 font-bold text-emerald-700 text-lg group-hover:translate-x-1 transition-transform">
+            Como me Proteger <i data-lucide="arrow-right" class="w-5 h-5"></i>
           </span>
-          <h3 class="text-xl font-semibold mb-2 flex items-center gap-2 subtitulo-secao">
-            Jogo "Golpe ou Seguro?" <span class="text-xs bg-orange-200 text-orange-800 px-2.5 py-0.5 rounded-full font-bold">Interativo</span>
-          </h3>
-          <p class="opacity-80 text-base">
-            Treine sua percepcao e aprenda a identificar mensagens seguras e tentativas de golpes reais recebidas no celular.
-          </p>
-          <div class="mt-4 font-bold flex items-center gap-1 text-sm text-blue-600 texto-destaque">
-            Comecar a jogar <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </div>
         </button>
 
-        <!-- Botao ir para Guias -->
-        <button onclick="mudarAba('guias')" class="p-6 rounded-2xl text-left transition-all hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-400 bg-white shadow-md border border-slate-100 estilo-card">
-          <span class="inline-block p-3 rounded-xl bg-purple-100 text-purple-600 mb-4">
-            <i data-lucide="book-open" class="w-8 h-8"></i>
-          </span>
-          <h3 class="text-xl font-semibold mb-2 subtitulo-secao">Guias de Seguranca</h3>
-          <p class="opacity-80 text-base">
-            Passo a passo bem detalhado sobre como criar senhas fortes, comprar na internet e usar o WhatsApp com seguranca.
-          </p>
-          <div class="mt-4 font-bold flex items-center gap-1 text-sm text-blue-600 texto-destaque">
-            Ver os guias <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </div>
-        </button>
-
-        <!-- Botao ir para Chatbot -->
-        <button onclick="mudarAba('chatbot')" class="p-6 rounded-2xl text-left transition-all hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-400 bg-white shadow-md border border-slate-100 estilo-card">
-          <span class="inline-block p-3 rounded-xl bg-cyan-100 text-cyan-600 mb-4">
-            <i data-lucide="sparkles" class="w-8 h-8"></i>
-          </span>
-          <h3 class="text-xl font-semibold mb-2 flex items-center gap-2 subtitulo-secao">
-            Perguntar ao Assistente <span class="text-xs bg-cyan-200 text-cyan-800 px-2.5 py-0.5 rounded-full font-bold">Inteligencia Artificial</span>
-          </h3>
-          <p class="opacity-80 text-base">
-            Tem uma duvida especifica? Quer saber se uma mensagem que voce recebeu e segura? Pergunte ao nosso robo assistente paciente.
-          </p>
-          <div class="mt-4 font-bold flex items-center gap-1 text-sm text-blue-600 texto-destaque">
-            Tirar minhas duvidas <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </div>
-        </button>
-
-        <!-- Botao ir para Emergencia -->
-        <button onclick="mudarAba('socorro')" class="p-6 rounded-2xl text-left transition-all hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-400 bg-white shadow-md border border-slate-100 estilo-card">
-          <span class="inline-block p-3 rounded-xl bg-rose-100 text-rose-600 mb-4">
-            <i data-lucide="alert-triangle" class="w-8 h-8"></i>
-          </span>
-          <h3 class="text-xl font-semibold mb-2 subtitulo-secao">Preciso de Ajuda Agora!</h3>
-          <p class="opacity-80 text-base">
-            Foi vitima de um golpe ou esta desconfiado? Copie mensagens de ajuda rapidamente para enviar a familiares e veja telefones uteis.
-          </p>
-          <div class="mt-4 font-bold flex items-center gap-1 text-sm text-blue-600 texto-destaque">
-            Abrir socorro <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </div>
-        </button>
-
-      </div>
-
-      <!-- Dica do Dia -->
-      <div class="p-6 rounded-2xl border-l-8 border-yellow-500 bg-white shadow-md border border-slate-100 estilo-card">
-        <h3 class="text-xl font-semibold flex items-center gap-2 mb-2 subtitulo-secao">
-          💡 Regra de Ouro da Seguranca Digital
-        </h3>
-        <p class="italic opacity-95 leading-relaxed text-base md:text-lg">
-          "Se a mensagem parece muito boa para ser verdade (como um premio que voce nao concorreu) ou muito assustadora (como um bloqueio imediato de conta), PARE, RESPIRE e nao tome nenhuma decisao com pressa. Ligue para alguem de sua extrema confianca antes de fazer qualquer coisa."
-        </p>
-      </div>
-
-      <!-- Dicionario / Glossario -->
-      <div class="p-6 rounded-2xl bg-white shadow-md border border-slate-100 estilo-card">
-        <h3 class="text-2xl font-bold mb-4 flex items-center gap-2 titulo-secao">
-          <i data-lucide="help-circle" class="w-6 h-6 text-indigo-500"></i>
-          Dicionario da Internet: O que significa?
-        </h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="conteiner-dicionario">
-          <!-- Inserido dinamicamente via JS -->
-        </div>
-      </div>
-    </</section>
-
-    <!-- TELA 2: JOGO SIMULADOR "GOLPE OU SEGURO" -->
-    <section id="aba-simulador" class="space-y-6 hidden">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h2 class="text-2xl font-bold titulo-secao">Jogo Treinamento: Golpe ou Seguro?</h2>
-          <p class="text-base opacity-80">Analise os casos abaixo e escolha se a mensagem e um golpe perigoso ou se ela e segura para abrir.</p>
-        </div>
-        <div class="flex items-center gap-3 bg-blue-100 px-4 py-2 rounded-xl border border-blue-200 self-stretch md:self-auto justify-between" id="emblema-pontuacao">
-          <span class="font-bold text-sm text-slate-600" id="rotulo-pontuacao">Pontuacao Atual:</span>
-          <span class="bg-blue-600 text-white px-3 py-1 rounded-full font-bold text-lg" id="pontuacao-atual">0 / 5</span>
-        </div>
-      </div>
-
-      <!-- Quadro de Cenario -->
-      <div class="p-6 rounded-3xl bg-white shadow-md border border-slate-100 relative overflow-hidden estilo-card">
-        <!-- Barra de Progresso -->
-        <div class="absolute top-0 left-0 w-full h-2 bg-slate-200">
-          <div class="h-full bg-blue-600 transition-all duration-300" id="progresso-simulador" style="width: 20%;"></div>
-        </div>
-
-        <div class="flex justify-between items-center mb-6 mt-2">
-          <span id="contador-cenario" class="text-xs md:text-sm font-semibold tracking-wider uppercase px-3 py-1 rounded-full bg-slate-100 text-slate-600">
-            Cenario 1 de 5
-          </span>
-          <span class="flex items-center gap-1.5 text-xs md:text-sm font-medium text-slate-500">
-            <i data-lucide="smartphone" class="w-4 h-4"></i> Simulacao de Celular
-          </span>
-        </div>
-
-        <!-- Tela Simulacao de Celular -->
-        <div class="bg-slate-100 rounded-2xl p-4 md:p-6 mb-6 max-w-lg mx-auto border-2 border-slate-200 shadow-inner" id="conteiner-celular">
-          <div class="flex items-center gap-3 border-b border-slate-200 pb-3 mb-3">
-            <div id="avatar-remetente" class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-lg">
-              N
+        <!-- Cartão 2: Pix e Bancos -->
+        <button onclick="openTipModal('bancos')" class="text-left bg-white text-black p-6 rounded-2xl border-4 border-blue-600 hover:border-black hover:shadow-lg transition-all flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <span class="p-3 bg-blue-100 rounded-xl text-blue-700 group-hover:bg-blue-200">
+                <i data-lucide="wallet" class="w-10 h-10"></i>
+              </span>
+              <h2 class="text-2xl font-black text-blue-800" onclick="event.stopPropagation(); readAloud(this.innerText)">Segurança com Pix e Bancos</h2>
             </div>
-            <div>
-              <h4 id="nome-remetente" class="font-bold text-slate-800 text-base md:text-lg">Remetente</h4>
-              <span class="text-xs text-slate-400">Mensagem recebida agora</span>
-            </div>
-          </div>
-
-          <div class="bg-white rounded-2xl rounded-tl-none p-4 text-slate-800 shadow-sm border border-slate-200/50">
-            <p id="mensagem-cenario" class="leading-relaxed font-sans text-base md:text-lg">
-              Mensagem de simulacao...
+            <p class="text-lg leading-relaxed text-gray-700" onclick="event.stopPropagation(); readAloud(this.innerText)">
+              O gerente ou atendente de banco NUNCA telefona para pedir que você faça transferências ou instale aplicativos.
             </p>
-            <span class="block text-right text-xs text-slate-400 mt-2">12:00</span>
           </div>
-        </div>
+          <span class="mt-6 inline-flex items-center gap-2 font-bold text-blue-700 text-lg group-hover:translate-x-1 transition-transform">
+            Como me Proteger <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </span>
+        </button>
 
-        <!-- Botoes de Acao para o Usuario -->
-        <div id="conteiner-acoes-simulador" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto">
-          <button onclick="enviarResposta(true)" class="p-4 rounded-xl bg-red-500 hover:bg-red-600 text-white flex items-center justify-center gap-2 font-bold text-lg transition-transform hover:scale-105 active:scale-95" id="btn-acao-golpe">
-            <i data-lucide="alert-triangle" class="w-6 h-6"></i> E GOLPE! Perigo 🛑
-          </button>
-          <button onclick="enviarResposta(false)" class="p-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center gap-2 font-bold text-lg transition-transform hover:scale-105 active:scale-95" id="btn-acao-seguro">
-            <i data-lucide="check-circle-2" class="w-6 h-6"></i> E SEGURO! Confiar ✅
-          </button>
-        </div>
-
-        <!-- Painel de Explicacao (Oculto inicialmente) -->
-        <div id="painel-explicacao" class="mt-4 p-5 rounded-2xl bg-slate-100 border border-slate-300/50 hidden">
-          <div class="flex items-center gap-3 mb-4">
-            <div id="manchete-feedback" class="flex items-center gap-2 font-extrabold text-xl">
-              <!-- Preenchido pelo JS -->
+        <!-- Cartão 3: Mensagens e Links Falsos -->
+        <button onclick="openTipModal('links')" class="text-left bg-white text-black p-6 rounded-2xl border-4 border-purple-600 hover:border-black hover:shadow-lg transition-all flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <span class="p-3 bg-purple-100 rounded-xl text-purple-700 group-hover:bg-purple-200">
+                <i data-lucide="link" class="w-10 h-10"></i>
+              </span>
+              <h2 class="text-2xl font-black text-purple-800" onclick="event.stopPropagation(); readAloud(this.innerText)">Sorteios e Links Falsos</h2>
             </div>
+            <p class="text-lg leading-relaxed text-gray-700" onclick="event.stopPropagation(); readAloud(this.innerText)">
+              Recebeu SMS dizendo que ganhou um prêmio ou que tem uma entrega atrasada pedindo seus dados? Aprenda a suspeitar.
+            </p>
           </div>
+          <span class="mt-6 inline-flex items-center gap-2 font-bold text-purple-700 text-lg group-hover:translate-x-1 transition-transform">
+            Como me Proteger <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </span>
+        </button>
 
-          <h4 id="titulo-explicacao" class="font-extrabold text-lg mb-2 text-slate-900">
-            Titulo explicativo
-          </h4>
-          <p id="texto-explicacao" class="mb-4 leading-relaxed text-base md:text-lg">
-            Explicacao detalhada...
-          </p>
-
-          <div id="dica-explicacao" class="p-3 bg-yellow-100 text-yellow-800 rounded-xl border border-yellow-200 font-medium text-sm md:text-base">
-            Dica de ouro...
+        <!-- Cartão 4: Criação de Senhas -->
+        <button onclick="openTipModal('senhas')" class="text-left bg-white text-black p-6 rounded-2xl border-4 border-amber-600 hover:border-black hover:shadow-lg transition-all flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <span class="p-3 bg-amber-100 rounded-xl text-amber-700 group-hover:bg-amber-200">
+                <i data-lucide="key-round" class="w-10 h-10"></i>
+              </span>
+              <h2 class="text-2xl font-black text-amber-800" onclick="event.stopPropagation(); readAloud(this.innerText)">Senhas Fortes e Seguras</h2>
+            </div>
+            <p class="text-lg leading-relaxed text-gray-700" onclick="event.stopPropagation(); readAloud(this.innerText)">
+              Anotar senhas atrás do cartão é muito perigoso. Veja como criar senhas fáceis de lembrar e difíceis de adivinhar.
+            </p>
           </div>
+          <span class="mt-6 inline-flex items-center gap-2 font-bold text-amber-700 text-lg group-hover:translate-x-1 transition-transform">
+            Como me Proteger <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </span>
+        </button>
 
-          <div class="mt-6 flex justify-end">
-            <button onclick="avancarCenario()" class="px-6 py-3 rounded-xl font-extrabold text-base flex items-center gap-2 transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-md" id="btn-proximo-cenario">
-              Proximo Desafio <i data-lucide="arrow-right" class="w-5 h-5"></i>
-            </button>
-          </div>
+      </div>
+    </section>
+
+    <!-- ================= ABA 2: JOGO (SIMULADOR DE GOLPES) ================= -->
+    <section id="tab-jogo" class="hidden space-y-6">
+      <div class="bg-white text-black p-6 rounded-2xl border-4 border-amber-500 shadow-md">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="p-2 bg-amber-100 rounded-lg text-amber-600"><i data-lucide="shield-alert" class="w-8 h-8"></i></span>
+          <h2 class="text-3xl font-extrabold text-amber-800" onclick="readAloud(this.innerText)">Treinamento de Defesa</h2>
         </div>
-
-      </div>
-    </section>
-
-    <!-- TELA 3: GUIAS PASSO A PASSO -->
-    <section id="aba-guias" class="space-y-6 hidden">
-      <div>
-        <h2 class="text-2xl font-bold titulo-secao">Guias de Seguranca Passo a Passo</h2>
-        <p class="text-base opacity-80">Tutoriais bem explicados, simples e diretos para o seu cotidiano.</p>
-      </div>
-
-      <div class="grid grid-cols-1 gap-6" id="conteiner-guias">
-        <!-- Inserido dinamicamente via JS -->
-      </div>
-    </section>
-
-    <!-- TELA 4: CHATBOT / ASSISTENTE IA -->
-    <section id="aba-chatbot" class="space-y-6 hidden">
-      <div>
-        <h2 class="text-2xl font-bold titulo-secao">Assistente de Duvidas de Seguranca</h2>
-        <p class="text-base opacity-80">
-          Voce recebeu uma mensagem suspeita? Escreva-a abaixo ou pergunte algo livremente sobre seguranca digital. Nosso assistente vai ajudar voce!
+        <p class="text-xl text-gray-700 leading-relaxed" onclick="readAloud(this.innerText)">
+          Vamos treinar na prática! Apresentaremos algumas mensagens e situações. Seu desafio é decidir se a mensagem é 
+          <strong class="text-emerald-700">Segura</strong> ou se é um <strong class="text-red-600">Golpe</strong>.
         </p>
       </div>
 
-      <div class="p-4 rounded-2xl flex flex-col h-[500px] bg-white shadow-md border border-slate-100 estilo-card">
+      <!-- Container do Quiz / Jogo -->
+      <div id="quiz-container" class="bg-slate-50 text-black border-4 border-black rounded-2xl p-6 md:p-8 space-y-6 relative overflow-hidden">
         
-        <!-- Alerta de Seguranca -->
-        <div class="p-3 bg-blue-50 text-blue-800 rounded-xl mb-4 text-xs md:text-sm flex items-center gap-2" id="alerta-chat">
-          <i data-lucide="sparkles" class="w-5 h-5 flex-shrink-0"></i>
-          <span>Conselho: Nunca envie senhas inteiras ou dados bancarios privados aqui na conversa.</span>
+        <!-- Barra de Progresso Visível -->
+        <div class="flex items-center justify-between text-lg font-bold border-b-2 border-gray-300 pb-3">
+          <span id="quiz-progress-text" class="text-xl">Pergunta 1 de 4</span>
+          <span id="quiz-score-text" class="text-emerald-700">Pontos: 0</span>
         </div>
 
-        <!-- Area de Conversacao -->
-        <div class="flex-grow overflow-y-auto space-y-4 p-2 mb-4" id="registro-chat">
-          <!-- Mensagens iniciais do bot e usuario são criadas aqui -->
-        </div>
-
-        <!-- Formulario de Envio -->
-        <form onsubmit="enviarMensagemChat(event)" class="flex gap-2">
-          <input
-            type="text"
-            id="campo-entrada-chat"
-            placeholder="Escreva sua duvida ou copie a mensagem suspeita aqui..."
-            class="flex-grow px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800 bg-white"
-          />
-          <button
-            type="submit"
-            id="btn-enviar-chat"
-            class="px-5 py-3 rounded-xl font-bold flex items-center gap-1.5 transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-md"
-          >
-            Perguntar
-          </button>
-        </form>
-
-      </div>
-
-      <!-- Perguntas Sugeridas -->
-      <div class="space-y-2">
-        <span class="block text-sm font-bold uppercase tracking-wider opacity-70">Exemplos de perguntas rapidas:</span>
-        <div class="flex flex-wrap gap-2" id="perguntas-sugeridas">
-          <!-- Inserido dinamicamente via JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- TELA 5: CENTRAL DE AJUDA / SOCORRO -->
-    <section id="aba-socorro" class="space-y-6 hidden">
-      <div>
-        <h2 class="text-2xl font-bold titulo-secao">Preciso de Ajuda / Central de Socorro</h2>
-        <p class="text-base opacity-80">
-          Se voce acha que caiu em um golpe ou esta com muito medo de algo que aconteceu, use os recursos desta pagina imediatamente.
-        </p>
-      </div>
-
-      <!-- Gerador de Mensagem de Ajuda -->
-      <div class="p-6 rounded-2xl bg-white shadow-md border border-slate-100 estilo-card">
-        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 subtitulo-secao">
-          💬 Avisar sua Familia Rapidamente
-        </h3>
-        <p class="mb-4 opacity-90 text-base">
-          Gere uma mensagem com as suas duvidas ou avisando sobre o problema, copie o texto e cole para mandar no WhatsApp de um filho, neto ou pessoa de confianca.
-        </p>
-
+        <!-- Pergunta Ativa -->
         <div class="space-y-4">
-          <div>
-            <label class="block text-sm font-bold mb-1 opacity-80">Nome do Parente de Confianca (Opcional):</label>
-            <input
-              type="text"
-              id="nome-contato-familia"
-              oninput="atualizarMensagemEmergencia()"
-              placeholder="Ex: Minha filha Julia, Meu neto Rodrigo..."
-              class="w-full px-4 py-2 rounded-lg border border-slate-300 text-slate-800"
-            />
-          </div>
-
-          <div>
-            <label class="block text-sm font-bold mb-1 opacity-80">Escolha o Tipo de Mensagem que deseja enviar:</label>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
-              <button onclick="definirMensagemModelo(0)" id="btn-modelo-0" class="p-3 rounded-lg text-left text-sm font-semibold transition-all border bg-blue-100 border-blue-500 text-blue-900 font-extrabold">
-                Duvida Geral
-              </button>
-              <button onclick="definirMensagemModelo(1)" id="btn-modelo-1" class="p-3 rounded-lg text-left text-sm font-semibold transition-all border bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100">
-                Mensagem Suspeita
-              </button>
-              <button onclick="definirMensagemModelo(2)" id="btn-modelo-2" class="p-3 rounded-lg text-left text-sm font-semibold transition-all border bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100">
-                Acho que cai em Golpe
-              </button>
+          <!-- Título da situação -->
+          <h3 id="quiz-title" class="text-2xl font-black text-gray-900" onclick="readAloud(this.innerText)">Caso: SMS de Entrega de Encomenda</h3>
+          
+          <!-- Cenário Visual Simulando Celular -->
+          <div class="bg-gray-100 rounded-xl border-2 border-gray-400 p-4 font-mono text-lg max-w-md mx-auto shadow-inner relative">
+            <div class="absolute top-2 left-1/2 transform -translate-x-1/2 bg-gray-300 h-2 w-16 rounded-full"></div>
+            <div class="pt-4 pb-2 border-b border-gray-300 flex items-center justify-between mb-3 text-xs text-gray-500 font-sans">
+              <span class="flex items-center gap-1 font-bold"><i data-lucide="message-square" class="w-3.5 h-3.5"></i> SMS Recebido</span>
+              <span>Hoje, 10:30</span>
             </div>
-          </div>
-
-          <!-- Caixa de Visualizacao da Mensagem -->
-          <div class="p-4 rounded-xl bg-slate-100 border border-slate-300">
-            <span class="block text-xs font-bold text-blue-600 mb-2 uppercase tracking-wider texto-destaque">Texto Pronto para Enviar:</span>
-            <p id="visualizacao-mensagem-gerada" class="text-slate-800 font-serif whitespace-pre-line text-base md:text-lg leading-relaxed bg-white p-3 rounded-lg border">
-              Oi, tudo bem? Estou com uma duvida sobre seguranca aqui no meu celular. Pode me dar uma ajuda rapidinho?
+            <!-- Conteúdo da simulação de golpe -->
+            <p id="quiz-simulated-content" class="text-black bg-white p-3 rounded-lg border border-gray-200 shadow-sm whitespace-pre-line leading-relaxed text-lg" onclick="readAloud(this.innerText)">
+              "CORREIOS: Seu objeto está retido por falta de pagamento. Acesse o link para regularizar: correios-tarifa-pagar.ru/seguro"
             </p>
           </div>
 
-          <!-- Botao Copiar -->
-          <button onclick="copiarMensagemGerada()" id="btn-copiar-msg" class="w-full py-4 rounded-xl font-extrabold text-lg flex items-center justify-center gap-2 transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-md">
-            <i data-lucide="copy" class="w-6 h-6"></i> Copiar Mensagem Pronta
-          </button>
+          <!-- Pergunta explicativa -->
+          <p id="quiz-question-prompt" class="text-xl font-bold text-center mt-6 text-gray-800" onclick="readAloud(this.innerText)">
+            O que você faz diante desta mensagem?
+          </p>
+
+          <!-- Opções gigantes de Resposta -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6" id="quiz-options">
+            <!-- Gerado dinamicamente -->
+          </div>
         </div>
       </div>
 
-      <!-- Telefones e Contatos -->
-      <div class="p-6 rounded-2xl bg-white shadow-md border border-slate-100 estilo-card">
-        <h3 class="text-xl font-semibold text-red-600 mb-4 flex items-center gap-2 subtitulo-secao" id="titulo-emergencia">
-          🚨 Telefones e Acoes Recomendadas
-        </h3>
+      <!-- Feedback de Conclusão do Quiz (Invisível no início) -->
+      <div id="quiz-result-card" class="hidden bg-emerald-50 text-emerald-950 border-4 border-emerald-500 rounded-2xl p-8 text-center space-y-6">
+        <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-emerald-600">
+          <i data-lucide="party-popper" class="w-12 h-12"></i>
+        </div>
+        <h2 class="text-4xl font-black" id="quiz-result-title">Treinamento Concluído!</h2>
+        <p class="text-2xl" id="quiz-result-desc">Você acertou todas as perguntas! Está pronto para se defender no dia a dia digital.</p>
+        <button onclick="restartQuiz()" class="big-target bg-emerald-600 text-white font-bold text-xl rounded-xl border-2 border-black hover:bg-emerald-700 inline-flex items-center gap-3">
+          <i data-lucide="rotate-ccw" class="w-6 h-6"></i>
+          Jogar Novamente
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= ABA 3: TELEFONES ÚTEIS ================= -->
+    <section id="tab-ajuda" class="hidden space-y-6">
+      <div class="text-center md:text-left mb-6">
+        <h1 class="text-3xl md:text-4xl font-extrabold mb-2" onclick="readAloud(this.innerText)">Telefones e Recursos de Ajuda</h1>
+        <p class="text-xl opacity-90" onclick="readAloud(this.innerText)">Se você desconfiar de algo ou se foi vítima de um golpe, use estes números imediatamente. Clique para ler os detalhes.</p>
+      </div>
+
+      <!-- Lista de Contatos Importantes -->
+      <div class="space-y-4">
         
-        <div class="space-y-4">
-          <!-- Acao Bancaria -->
-          <div class="p-4 rounded-xl border border-red-200 bg-red-50/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 caixa-texto-destaque">
+        <!-- Cartão Contato 1 -->
+        <div class="bg-white text-black p-5 rounded-2xl border-4 border-red-600 shadow flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <span class="bg-red-100 text-red-800 text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wider">Polícia Militar</span>
+            <h2 class="text-2xl font-black mt-2 text-red-700" onclick="readAloud('Polícia Militar número 1 9 0')">Ligar 190</h2>
+            <p class="text-lg text-gray-700 leading-relaxed mt-1" onclick="readAloud('Para comunicar crimes em andamento ou urgências policiais imediatas.')">
+              Para comunicar crimes em andamento ou urgências policiais imediatas.
+            </p>
+          </div>
+          <a href="tel:190" class="big-target bg-red-600 text-white font-black text-xl rounded-xl border-2 border-black hover:bg-red-700 flex items-center justify-center gap-2 w-full md:w-auto shadow-md">
+            <i data-lucide="phone" class="w-6 h-6"></i> Ligar Agora
+          </a>
+        </div>
+
+        <!-- Cartão Contato 2 -->
+        <div class="bg-white text-black p-5 rounded-2xl border-4 border-amber-600 shadow flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <span class="bg-amber-100 text-amber-800 text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wider">Disque Direitos Humanos</span>
+            <h2 class="text-2xl font-black mt-2 text-amber-700" onclick="readAloud('Disque Direitos Humanos número 1 0 0')">Ligar 100</h2>
+            <p class="text-lg text-gray-700 leading-relaxed mt-1" onclick="readAloud('Para relatar violência financeira, abusos ou golpes direcionados contra idosos.')">
+              Para relatar violência financeira, abusos ou golpes direcionados contra idosos.
+            </p>
+          </div>
+          <a href="tel:100" class="big-target bg-amber-600 text-black font-black text-xl rounded-xl border-2 border-black hover:bg-amber-500 flex items-center justify-center gap-2 w-full md:w-auto shadow-md">
+            <i data-lucide="phone" class="w-6 h-6"></i> Ligar Agora
+          </a>
+        </div>
+
+        <!-- Cartão Contato 3 -->
+        <div class="bg-white text-black p-5 rounded-2xl border-4 border-blue-600 shadow flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <span class="bg-blue-100 text-blue-800 text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wider">Banco do Brasil / CEF (Exemplo)</span>
+            <h2 class="text-2xl font-black mt-2 text-blue-700" onclick="readAloud('Fale com seu Banco imediatamente')">Fale com seu Banco</h2>
+            <p class="text-lg text-gray-700 leading-relaxed mt-1" onclick="readAloud('Pegue seu cartão e ligue para o número de atendimento impresso no verso dele.')">
+              Pegue seu cartão físico de plástico e ligue para o número de atendimento impresso no <strong>verso do cartão</strong>.
+            </p>
+          </div>
+          <button onclick="openTipModal('bancos')" class="big-target bg-blue-600 text-white font-black text-xl rounded-xl border-2 border-black hover:bg-blue-700 flex items-center justify-center gap-2 w-full md:w-auto shadow-md">
+            <i data-lucide="shield-alert" class="w-6 h-6"></i> Ver Instruções
+          </button>
+        </div>
+
+        <!-- Seção Contato de Confiança Customizado (Para salvar um parente) -->
+        <div class="bg-emerald-50 text-black p-6 rounded-2xl border-4 border-dashed border-emerald-600 shadow-md">
+          <div class="flex items-center gap-3 mb-3">
+            <i data-lucide="heart" class="w-8 h-8 text-emerald-600"></i>
+            <h3 class="text-2xl font-extrabold text-emerald-800" onclick="readAloud(this.innerText)">Seu Contato de Confiança</h3>
+          </div>
+          <p class="text-lg mb-4" onclick="readAloud(this.innerText)">Cadastre aqui o nome e telefone de um filho, neto ou vizinho de confiança. Assim, você poderá ligar para ele rapidamente caso desconfie de alguma mensagem!</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <h4 class="font-bold text-red-700 text-lg mb-1" id="titulo-acao-banco">Passou dados bancarios ou fez Pix?</h4>
-              <p class="text-sm opacity-90">
-                Ligue imediatamente para o SAC do seu banco (o numero de telefone esta atras do seu cartao fisico) e informe o ocorrido para bloquear transacoes.
-              </p>
+              <label for="contact-name" class="block font-bold text-lg mb-1">Nome do Parente:</label>
+              <input type="text" id="contact-name" placeholder="Ex: Meu Filho Pedro" class="w-full p-3 rounded-lg border-2 border-gray-400 text-lg text-black focus:border-emerald-600" onchange="saveTrustedContact()">
+            </div>
+            <div>
+              <label for="contact-phone" class="block font-bold text-lg mb-1">Telefone / WhatsApp:</label>
+              <input type="tel" id="contact-phone" placeholder="Ex: (11) 99999-9999" class="w-full p-3 rounded-lg border-2 border-gray-400 text-lg text-black focus:border-emerald-600" onchange="saveTrustedContact()">
             </div>
           </div>
 
-          <!-- PM -->
-          <div class="p-4 rounded-xl border border-slate-200 bg-slate-100/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 caixa-texto-normal">
-            <div>
-              <h4 class="font-bold text-slate-800 text-lg mb-1">Policia Militar - Emergencias</h4>
-              <p class="text-sm opacity-90">
-                Se houver ameacas fisicas, extorcoes imediatas ou assaltos presenciais, ligue para a Policia Militar.
-              </p>
-            </div>
-            <a href="tel:190" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xl px-4 py-2 rounded-xl flex items-center gap-2 flex-shrink-0">
-              <i data-lucide="phone" class="w-5 h-5"></i> 190
-            </a>
-          </div>
-
-          <!-- Policia Civil -->
-          <div class="p-4 rounded-xl border border-slate-200 bg-slate-100/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 caixa-texto-normal">
-            <div>
-              <h4 class="font-bold text-slate-800 text-lg mb-1">Delegacia de Policia Civil</h4>
-              <p class="text-sm opacity-90">
-                Para registrar um Boletim de Ocorrencia sobre o golpe financeiro ou roubo de contas virtuais na internet.
-              </p>
-            </div>
-            <a href="tel:197" class="bg-slate-700 hover:bg-slate-800 text-white font-extrabold text-xl px-4 py-2 rounded-xl flex items-center gap-2 flex-shrink-0">
-              <i data-lucide="phone" class="w-5 h-5"></i> 197
+          <div id="call-trusted-container" class="mt-4 hidden">
+            <a id="call-trusted-btn" href="#" class="big-target bg-emerald-600 text-white font-black text-xl rounded-xl border-2 border-black hover:bg-emerald-700 flex items-center justify-center gap-3 shadow-md">
+              <i data-lucide="phone-call" class="w-6 h-6"></i> Ligar para <span id="call-trusted-name">Parente</span>
             </a>
           </div>
         </div>
+
       </div>
     </section>
 
   </main>
 
-  <!-- BARRA DE NAVEGACAO INFERIOR PARA TOQUE FACIL -->
-  <nav class="fixed bottom-0 left-0 w-full z-40 border-t shadow-2xl flex justify-around items-center px-2 py-3 bg-white border-slate-200" id="navegacao-inferior">
+  <!-- ================= MODAL DE DETALHES DE SEGURANÇA (GENÉRICO) ================= -->
+  <div id="tipModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="bg-white text-black rounded-3xl border-4 border-black max-w-2xl w-full p-6 md:p-8 space-y-6 max-h-[90vh] overflow-y-auto shadow-2xl relative">
+      
+      <!-- Cabeçalho do Modal -->
+      <div class="flex items-start justify-between border-b-2 border-gray-200 pb-4">
+        <div class="flex items-center gap-3">
+          <span id="modalIconContainer" class="p-3 rounded-2xl">
+            <!-- Ícone dinâmico -->
+          </span>
+          <h2 id="modalTitle" class="text-3xl font-black tracking-tight" onclick="readAloud(this.innerText)">Título do Modal</h2>
+        </div>
+        <button onclick="closeTipModal()" class="p-2 text-gray-500 hover:text-black hover:bg-gray-100 rounded-full" style="min-width: 48px; min-height: 48px;" aria-label="Fechar janela">
+          <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+      </div>
+
+      <!-- Botão para ler o modal todo em áudio -->
+      <button onclick="readModalContent()" class="bg-amber-100 text-amber-900 border-2 border-amber-400 p-3 rounded-xl font-bold flex items-center justify-center gap-2 w-full text-lg hover:bg-amber-200" style="min-height: 48px;">
+        <i data-lucide="volume-2" class="w-6 h-6"></i> Ouvir Dicas Deste Cartão
+      </button>
+
+      <!-- Conteúdo do Modal (Dicas organizadas passo-a-passo) -->
+      <div id="modalContent" class="space-y-6 text-lg leading-relaxed">
+        <!-- Conteúdo preenchido via JS -->
+      </div>
+
+      <!-- Rodapé / Ação principal -->
+      <div class="pt-4 border-t-2 border-gray-200 flex justify-end">
+        <button onclick="closeTipModal()" class="big-target bg-amber-500 text-black font-black text-xl rounded-xl border-2 border-black hover:bg-amber-600 shadow-md">
+          Entendi, Obrigado!
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RODAPÉ FINAL -->
+  <footer class="mt-auto border-t-2 border-gray-300 pt-8 text-center text-gray-500 max-w-4xl mx-auto px-4 w-full">
+    <p class="text-lg font-bold" onclick="readAloud(this.innerText)">Aplicativo Guardião Digital - Protegendo quem mais amamos.</p>
+    <p class="text-base mt-1" onclick="readAloud(this.innerText)">Nenhum dado é coletado ou enviado pela internet. Segurança total e privada.</p>
+  </footer>
+
+  <!-- SCRIPT PARA CONTROLES DE ACESSIBILIDADE E JOGO DE SEGURANÇA -->
+  <script>
+    // Inicialização de Variáveis de Controle
+    let currentScale = 1.1; // Inicial ligeiramente maior para idosos
+    let currentTheme = 'light';
+    let isTtsEnabled = false; // Controle de Leitura em Voz Alta
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+
+    // Dados das Dicas dos Modais
+    const tipData = {
+      whatsapp: {
+        title: "Golpe do WhatsApp (Falso Parente)",
+        icon: "message-square",
+        iconColor: "bg-emerald-100 text-emerald-800",
+        colorClass: "border-emerald-600",
+        steps: [
+          {
+            title: "Como funciona o golpe?",
+            desc: "Um criminoso consegue uma foto do seu filho ou parente e manda mensagem de um número desconhecido dizendo: 'Oi mãe/pai, mudei de número, salve este novo aí!'."
+          },
+          {
+            title: "A desculpa do dinheiro:",
+            desc: "Logo em seguida, o golpista diz que precisa pagar uma conta urgente e pede para você fazer um Pix ou transferência bancária rápido."
+          },
+          {
+            title: "🚨 Regra de Ouro:",
+            desc: "NUNCA envie dinheiro na hora! Antes de qualquer coisa, ligue para o número ANTIGO do seu parente por chamada de voz normal. Não confie apenas em áudios gravados ou mensagens de texto."
+          }
+        ]
+      },
+      bancos: {
+        title: "Atenção com Ligações e Pix",
+        icon: "wallet",
+        iconColor: "bg-blue-100 text-blue-800",
+        colorClass: "border-blue-600",
+        steps: [
+          {
+            title: "A falsa ligação do banco:",
+            desc: "Eles ligam fingindo que são da segurança do seu banco dizendo que sua conta foi invadida ou que há um Pix suspeito agendado."
+          },
+          {
+            title: "O que o banco NUNCA faz:",
+            desc: "O banco de verdade nunca telefona pedindo para você realizar um Pix para 'salvar' ou 'proteger' seu dinheiro. O banco também nunca pede suas senhas por telefone ou que instale novos programas."
+          },
+          {
+            title: "🚨 Regra de Ouro:",
+            desc: "Desligue o telefone na cara! Vá até a sua agência bancária pessoalmente ou pegue seu cartão físico e ligue para o número de suporte que está escrito no verso dele."
+          }
+        ]
+      },
+      links: {
+        title: "Mensagens com Links Falsos",
+        icon: "link",
+        iconColor: "bg-purple-100 text-purple-800",
+        colorClass: "border-purple-600",
+        steps: [
+          {
+            title: "SMS ou e-mail de mentira:",
+            desc: "Você recebe mensagens como: 'Sua fatura está em atraso, evite o bloqueio' ou 'Você ganhou um prêmio de R$ 5.000, clique para resgatar'."
+          },
+          {
+            title: "O que acontece ao clicar?",
+            desc: "Esses sites falsos roubam suas senhas bancárias ou instalam vírus espiões no seu celular para ver suas conversas."
+          },
+          {
+            title: "🚨 Regra de Ouro:",
+            desc: "Se você não comprou nada ou não estava esperando nenhuma entrega, ignore a mensagem. Não clique em links enviados por números desconhecidos."
+          }
+        ]
+      },
+      senhas: {
+        title: "Criando Senhas Seguras",
+        icon: "key-round",
+        iconColor: "bg-amber-100 text-amber-800",
+        colorClass: "border-amber-600",
+        steps: [
+          {
+            title: "O que evitar nas senhas?",
+            desc: "Evite usar sua data de nascimento, seu nome, nome de filhos ou sequências fáceis como '123456'. Ladrões testam isso primeiro!"
+          },
+          {
+            title: "Uma técnica fácil de lembrar:",
+            desc: "Pense em uma frase curta que você ama e use apenas as primeiras letras. Exemplo: 'O meu cachorro Totó tem 5 anos' vira: 'Omctt5a!'."
+          },
+          {
+            title: "🚨 Regra de Ouro:",
+            desc: "NUNCA anote suas senhas no celular ou em papéis guardados na sua carteira. Se perder o celular ou a carteira, os criminosos terão acesso a tudo."
+          }
+        ]
+      }
+    };
+
+    // Dados do Quiz Interativo
+    const quizData = [
+      {
+        title: "Caso do WhatsApp Urgente",
+        scenario: "Seu neto te manda mensagem de um número novo com a foto dele dizendo:\n'Vovó, troquei de número, me passa R$ 400 por Pix rápido que preciso pagar um remédio.'",
+        question: "Qual é a sua atitude?",
+        options: [
+          {
+            text: "Fazer o Pix na hora para ajudar meu neto querido o mais rápido possível.",
+            isCorrect: false,
+            feedback: "Perigo! Se for um criminoso, você perderá esse dinheiro para sempre. Ligue para o telefone antigo dele primeiro!"
+          },
+          {
+            text: "Não mandar dinheiro e fazer uma ligação para o número antigo do meu neto para conferir se é verdade.",
+            isCorrect: true,
+            feedback: "Excelente escolha! Ligar no telefone tradicional confirma se ele realmente trocou de número ou se é um golpista tentando te enganar."
+          }
+        ]
+      },
+      {
+        title: "A Ligação de Alerta de Fraude",
+        scenario: "Um atendente muito simpático liga se identificando do seu banco e diz:\n'Sua conta está prestes a ser bloqueada devido a um vírus. Para proteger seu saldo, faça um Pix para nossa conta de segurança.'",
+        question: "Como você procede?",
+        options: [
+          {
+            text: "Digo que vou desligar e irei pessoalmente à minha agência bancária ou usarei o número do verso do meu cartão.",
+            isCorrect: true,
+            feedback: "Perfeito! Bancos nunca ligam pedindo transferências de emergência por Pix para salvar dinheiro de vírus."
+          },
+          {
+            text: "Sigo as instruções do atendente com pressa para não perder minhas economias de uma vida.",
+            isCorrect: false,
+            feedback: "Atenção extrema! Esse é o famoso golpe da falsa central telefônica. O banco de verdade nunca faria isso."
+          }
+        ]
+      },
+      {
+        title: "SMS de Entrega Retida",
+        scenario: "Você recebe um SMS de um número comum (tipo celular comum) escrito:\n'SEDEX: Sua mercadoria está retida na alfândega. Clique aqui para pagar a taxa: correios-seguros-taxas.net/pagar'",
+        question: "Como você reage?",
+        options: [
+          {
+            text: "Ignoro e apago a mensagem imediatamente, pois sei que os Correios não mandam SMS com cobranças desse tipo.",
+            isCorrect: true,
+            feedback: "Fantástico! Sites de correios reais terminam em '.com.br' e os Correios não mandam mensagens cobrando taxas de surpresa."
+          },
+          {
+            text: "Clico no link logo para liberar logo minha suposta encomenda que pode ser um presente.",
+            isCorrect: false,
+            feedback: "Risco Alto! Clicar em links duvidosos de SMS pode infectar seu aparelho de telefone com vírus espiões."
+          }
+        ]
+      },
+      {
+        title: "Sorteio do Pix Premiado",
+        scenario: "Um amigo seu compartilha no WhatsApp um link com a foto de uma marca famosa escrito:\n'A Nestlé está distribuindo R$ 500 no Pix em comemoração aos seus 100 anos! Resgate agora digitando seu CPF e senha bancária.'",
+        question: "O que você decide fazer?",
+        options: [
+          {
+            text: "Digitar meu CPF e dados para ganhar o prêmio, afinal meu amigo de confiança que mandou no grupo.",
+            isCorrect: false,
+            feedback: "Cuidado! Muitas vezes o celular do seu amigo foi hackeado ou ele foi enganado. Grandes marcas não pedem senhas bancárias em promoções."
+          },
+          {
+            text: "Não clico e aviso meu amigo que esse link pode ser perigoso e falso.",
+            isCorrect: true,
+            feedback: "Maravilhoso! Proteger a si mesmo e alertar seus amigos queridos é a melhor forma de combater essas armadilhas online."
+          }
+        ]
+      }
+    ];
+
+    // Inicialização da página
+    window.onload = function() {
+      lucide.createIcons();
+      updateAccessibilityStyles();
+      loadTrustedContact();
+      loadQuestion();
+    };
+
+    // FUNÇÕES DE ACESSIBILIDADE
     
-    <!-- Inicio -->
-    <button onclick="mudarAba('inicio')" id="btn-nav-inicio" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all focus:outline-none text-blue-600 bg-blue-50 font-bold" style="min-width: 70px; min-height: 60px;">
-      <i data-lucide="shield" class="w-6 h-6 mb-1"></i>
-      <span class="text-xs font-semibold">Inicio</span>
-    </button>
+    // Altera tamanho da fonte (escala global)
+    function changeFontSize(delta) {
+      currentScale += delta;
+      // Garante limites razoáveis de tamanho de fonte
+      if (currentScale < 0.9) currentScale = 0.9;
+      if (currentScale > 1.8) currentScale = 1.8;
+      updateAccessibilityStyles();
+      
+      const text = delta > 0 ? "Letras aumentadas" : "Letras diminuídas";
+      announceToScreenReader(text);
+    }
 
-    <!-- Simulador -->
-    <button onclick="mudarAba('simulador')" id="btn-nav-simulador" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all focus:outline-none text-slate-500 hover:text-slate-800" style="min-width: 70px; min-height: 60px;">
-      <i data-lucide="play" class="w-6 h-6 mb-1"></i>
-      <span class="text-xs font-semibold">Golpe?</span>
-    </button>
+    function resetFontSize() {
+      currentScale = 1.1;
+      updateAccessibilityStyles();
+      announceToScreenReader("Tamanho de letra restaurado para o padrão confortável");
+    }
 
-    <!-- Guias -->
-    <button onclick="mudarAba('guias')" id="btn-nav-guias" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all focus:outline-none text-slate-500 hover:text-slate-800" style="min-width: 70px; min-height: 60px;">
-      <i data-lucide="book-open" class="w-6 h-6 mb-1"></i>
-      <span class="text-xs font-semibold">Guias</span>
-    </button>
+    // Alternar temas de cores
+    function toggleTheme() {
+      const body = document.getElementById('appBody');
+      body.classList.remove('theme-light', 'theme-dark', 'theme-high-contrast');
 
-    <!-- Duvidas -->
-    <button onclick="mudarAba('chatbot')" id="btn-nav-chatbot" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all focus:outline-none text-slate-500 hover:text-slate-800" style="min-width: 70px; min-height: 60px;">
-      <i data-lucide="message-square" class="w-6 h-6 mb-1"></i>
-      <span class="text-xs font-semibold">Duvidas</span>
-    </button>
+      if (currentTheme === 'light') {
+        currentTheme = 'dark';
+        body.classList.add('theme-dark');
+        announceToScreenReader("Modo Escuro ativado.");
+      } else if (currentTheme === 'dark') {
+        currentTheme = 'high-contrast';
+        body.classList.add('theme-high-contrast');
+        announceToScreenReader("Modo Alto Contraste ativado. Fundo preto com letras amarelas.");
+      } else {
+        currentTheme = 'light';
+        body.classList.add('theme-light');
+        announceToScreenReader("Modo Claro Suave ativado.");
+      }
+    }
 
-    <!-- Socorro -->
-    <button onclick="mudarAba('socorro')" id="btn-nav-socorro" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all focus:outline-none text-red-500/70 hover:text-red-600" style="min-width: 70px; min-height: 60px;">
-      <i data-lucide="alert-triangle" class="w-6 h-6 mb-1"></i>
-      <span class="text-xs font-semibold">Socorro</span>
-    </button>
+    // Atualiza o estilo de fonte em todo o documento
+    function updateAccessibilityStyles() {
+      document.documentElement.style.fontSize = `${16 * currentScale}px`;
+    }
 
-  </nav>
+    // Leitor de Áudio Integrado (Web Speech Synthesis)
+    function toggleAudioAssistant() {
+      isTtsEnabled = !isTtsEnabled;
+      const btn = document.getElementById('ttsToggleBtn');
+      const icon = document.getElementById('ttsIcon');
+      const text = document.getElementById('ttsText');
 
-  <!-- Ligacao com a sua logica local (JavaScript) -->
-  <script src="script.js" defer></script>
+      if (isTtsEnabled) {
+        btn.classList.remove('bg-emerald-700', 'hover:bg-emerald-800');
+        btn.classList.add('bg-orange-600', 'hover:bg-orange-700');
+        text.innerText = "Som Ativo 🔊";
+        announceToScreenReader("O leitor de voz está ativado. Agora, qualquer texto ou botão que você clicar será lido em voz alta.");
+      } else {
+        window.speechSynthesis.cancel();
+        btn.classList.remove('bg-orange-600', 'hover:bg-orange-700');
+        btn.classList.add('bg-emerald-700', 'hover:bg-emerald-800');
+        text.innerText = "Som Desativado 🔇";
+      }
+    }
+
+    // Função universal para ler texto em voz alta se o áudio estiver ativado
+    function readAloud(text) {
+      if (!isTtsEnabled) return;
+      window.speechSynthesis.cancel(); // Para leituras anteriores para não acumular
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'pt-BR';
+      utterance.rate = 0.95; // Levemente mais lento para facilitar a compreensão de idosos
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // Anúncio falado para feedback de ações cruciais do sistema
+    function announceToScreenReader(text) {
+      if (isTtsEnabled) {
+        readAloud(text);
+      }
+    }
+
+    // NAVEGAÇÃO DE ABAS
+    function switchTab(tabId) {
+      // Esconder todas as abas
+      document.getElementById('tab-dicas').classList.add('hidden');
+      document.getElementById('tab-jogo').classList.add('hidden');
+      document.getElementById('tab-ajuda').classList.add('hidden');
+
+      // Remover estados ativos das abas
+      const tabs = ['dicas', 'jogo', 'ajuda'];
+      tabs.forEach(tab => {
+        const btn = document.getElementById(`tabBtn-${tab}`);
+        btn.className = "big-target flex items-center justify-center gap-3 border-4 rounded-xl font-black text-xl transition-all shadow-md bg-white border-gray-300 text-gray-700 hover:border-black hover:text-black";
+      });
+
+      // Ativar aba selecionada
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tabBtn-${tabId}`);
+      activeBtn.className = "big-target flex items-center justify-center gap-3 border-4 rounded-xl font-black text-xl transition-all shadow-md bg-amber-500 border-black text-black";
+
+      // Anunciar mudança de página
+      let pageName = "";
+      if (tabId === 'dicas') pageName = "Aba de Aprendizado de Dicas de Segurança";
+      if (tabId === 'jogo') pageName = "Aba do Jogo e Treinamento Prático de Golpes";
+      if (tabId === 'ajuda') pageName = "Aba de Telefones e Contatos de Ajuda Úteis";
+      
+      announceToScreenReader(pageName);
+    }
+
+    // MODAL DE DETALHES DAS DICAS
+    function openTipModal(tipKey) {
+      const data = tipData[tipKey];
+      if (!data) return;
+
+      const modal = document.getElementById('tipModal');
+      const title = document.getElementById('modalTitle');
+      const iconContainer = document.getElementById('modalIconContainer');
+      const content = document.getElementById('modalContent');
+
+      // Configura Título e Classe de Borda
+      title.innerText = data.title;
+      iconContainer.className = `p-3 rounded-2xl ${data.iconColor}`;
+      iconContainer.innerHTML = `<i data-lucide="${data.icon}" class="w-10 h-10"></i>`;
+
+      // Monta os passos de dicas de forma extremamente legível
+      let htmlContent = "";
+      data.steps.forEach((step, index) => {
+        htmlContent += `
+          <div class="p-4 rounded-xl border-2 border-gray-200 bg-slate-50 space-y-1">
+            <h3 class="text-xl font-black text-slate-900" onclick="readAloud(this.innerText)">${index + 1}. ${step.title}</h3>
+            <p class="text-lg text-slate-700 leading-relaxed" onclick="readAloud(this.innerText)">${step.desc}</p>
+          </div>
+        `;
+      });
+      content.innerHTML = htmlContent;
+
+      // Abre o modal removendo classe hidden
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden'; // Impede rolagem por trás
+      lucide.createIcons();
+
+      announceToScreenReader(`Abriu os detalhes de: ${data.title}. Clique nos blocos de dicas para ler cada um.`);
+    }
+
+    function closeTipModal() {
+      const modal = document.getElementById('tipModal');
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto'; // Restaura rolagem
+      window.speechSynthesis.cancel(); // Para o áudio imediatamente se fechar o modal
+      announceToScreenReader("Janela de informações fechada.");
+    }
+
+    // Lê todo o conteúdo do modal aberto em sequência
+    function readModalContent() {
+      const title = document.getElementById('modalTitle').innerText;
+      let fullText = `${title}. Aqui estão as dicas importantes: `;
+
+      const cards = document.getElementById('modalContent').querySelectorAll('h3, p');
+      cards.forEach(element => {
+        fullText += " " + element.innerText;
+      });
+
+      readAloud(fullText);
+    }
+
+    // LÓGICA DO JOGO / QUIZ
+    function loadQuestion() {
+      const currentQuestion = quizData[currentQuizIndex];
+      
+      // Atualiza textos do Quiz
+      document.getElementById('quiz-progress-text').innerText = `Pergunta ${currentQuizIndex + 1} de ${quizData.length}`;
+      document.getElementById('quiz-score-text').innerText = `Pontos: ${quizScore}`;
+      document.getElementById('quiz-title').innerText = currentQuestion.title;
+      document.getElementById('quiz-simulated-content').innerText = currentQuestion.scenario;
+      document.getElementById('quiz-question-prompt').innerText = currentQuestion.question;
+
+      // Gera opções com botões gigantes e acessíveis
+      const optionsContainer = document.getElementById('quiz-options');
+      optionsContainer.innerHTML = "";
+
+      currentQuestion.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.className = "big-target bg-white text-black text-left p-5 rounded-2xl border-4 border-gray-300 hover:border-black hover:bg-slate-50 transition-all font-bold text-lg leading-relaxed flex flex-col justify-between";
+        btn.onclick = () => selectOption(index);
+        btn.innerHTML = `
+          <span class="text-blue-700 font-extrabold text-xl mb-2">Opção ${index + 1}:</span>
+          <span onclick="event.stopPropagation(); readAloud(this.innerText)">${option.text}</span>
+        `;
+        optionsContainer.appendChild(btn);
+      });
+
+      // Anuncia a nova pergunta por voz se estiver ativo
+      if (isTtsEnabled) {
+        const announcement = `Cenário do Jogo. ${currentQuestion.title}. ${currentQuestion.scenario}. Pergunta: ${currentQuestion.question}. Escolha a opção 1 ou a opção 2.`;
+        readAloud(announcement);
+      }
+    }
+
+    function selectOption(index) {
+      const currentQuestion = quizData[currentQuizIndex];
+      const selectedOption = currentQuestion.options[index];
+
+      // Atualiza pontuação se acertar
+      if (selectedOption.isCorrect) {
+        quizScore += 10;
+      }
+
+      // Mostra o modal customizado de resposta (Feedback seguro sem alert)
+      openFeedbackModal(selectedOption.isCorrect, selectedOption.feedback);
+    }
+
+    // Modal de Feedback do Quiz
+    function openFeedbackModal(isCorrect, feedbackText) {
+      // Usaremos o próprio modal de dicas reaproveitado para dar o feedback do jogo
+      const modal = document.getElementById('tipModal');
+      const title = document.getElementById('modalTitle');
+      const iconContainer = document.getElementById('modalIconContainer');
+      const content = document.getElementById('modalContent');
+
+      if (isCorrect) {
+        title.innerText = "Parabéns! Resposta Correta!";
+        iconContainer.className = "p-3 rounded-2xl bg-emerald-100 text-emerald-800";
+        iconContainer.innerHTML = `<i data-lucide="check-circle" class="w-10 h-10"></i>`;
+        content.innerHTML = `
+          <div class="text-center space-y-4">
+            <span class="text-6xl">🎉</span>
+            <p class="text-2xl font-black text-emerald-700">Você tomou a decisão de proteção perfeita!</p>
+            <p class="text-lg text-gray-700 mt-2">${feedbackText}</p>
+          </div>
+        `;
+        announceToScreenReader(`Muito bem! Resposta Correta! ${feedbackText}`);
+      } else {
+        title.innerText = "Atenção! Cuidado com essa Escolha.";
+        iconContainer.className = "p-3 rounded-2xl bg-red-100 text-red-800";
+        iconContainer.innerHTML = `<i data-lucide="alert-triangle" class="w-10 h-10"></i>`;
+        content.innerHTML = `
+          <div class="text-center space-y-4">
+            <span class="text-6xl">⚠️</span>
+            <p class="text-2xl font-black text-red-600">Isso pode colocar seus dados em risco!</p>
+            <p class="text-lg text-gray-700 mt-2">${feedbackText}</p>
+          </div>
+        `;
+        announceToScreenReader(`Cuidado com essa escolha. ${feedbackText}`);
+      }
+
+      // Substitui o botão de fechar comum para avançar para a próxima pergunta
+      const footerBtn = modal.querySelector('footer, button[onclick="closeTipModal()"]:last-of-type');
+      if (footerBtn) {
+        footerBtn.innerText = "Próxima Pergunta ➡️";
+        footerBtn.onclick = () => {
+          closeTipModal();
+          advanceQuiz();
+        };
+      }
+
+      modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function advanceQuiz() {
+      currentQuizIndex++;
+      if (currentQuizIndex < quizData.length) {
+        loadQuestion();
+      } else {
+        // Fim de jogo, mostra placar final
+        document.getElementById('quiz-container').classList.add('hidden');
+        document.getElementById('quiz-result-card').classList.remove('hidden');
+
+        const resultTitle = document.getElementById('quiz-result-title');
+        const resultDesc = document.getElementById('quiz-result-desc');
+
+        resultTitle.innerText = "Treinamento Finalizado!";
+        resultDesc.innerText = `Você concluiu o treinamento de segurança digital e fez um total de ${quizScore} pontos! Compartilhe o que aprendeu com seus amigos idosos.`;
+        
+        announceToScreenReader(`Treinamento Finalizado! Parabéns, você concluiu com ${quizScore} pontos.`);
+      }
+
+      // Restaura o botão original do modal para fechamento normal posteriormente
+      const modal = document.getElementById('tipModal');
+      const footerBtn = modal.querySelector('button[onclick*="advanceQuiz"], button[onclick*="closeTipModal"]');
+      if (footerBtn) {
+        footerBtn.innerText = "Entendi, Obrigado!";
+        footerBtn.onclick = () => closeTipModal();
+      }
+    }
+
+    function restartQuiz() {
+      currentQuizIndex = 0;
+      quizScore = 0;
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('quiz-result-card').classList.add('hidden');
+      loadQuestion();
+    }
+
+    // PERSISTÊNCIA DO CONTATO DE CONFIANÇA (In-memory e LocalStorage com salvamento simples)
+    function saveTrustedContact() {
+      const name = document.getElementById('contact-name').value;
+      const phone = document.getElementById('contact-phone').value;
+
+      if (name && phone) {
+        localStorage.setItem('guardiao_trusted_name', name);
+        localStorage.setItem('guardiao_trusted_phone', phone);
+        updateTrustedContactUI(name, phone);
+        announceToScreenReader(`Salvo com sucesso! Seu contato de confiança agora é o parente ${name}.`);
+      } else {
+        document.getElementById('call-trusted-container').classList.add('hidden');
+      }
+    }
+
+    function loadTrustedContact() {
+      const name = localStorage.getItem('guardiao_trusted_name');
+      const phone = localStorage.getItem('guardiao_trusted_phone');
+
+      if (name && phone) {
+        document.getElementById('contact-name').value = name;
+        document.getElementById('contact-phone').value = phone;
+        updateTrustedContactUI(name, phone);
+      }
+    }
+
+    function updateTrustedContactUI(name, phone) {
+      const container = document.getElementById('call-trusted-container');
+      const btn = document.getElementById('call-trusted-btn');
+      const spanName = document.getElementById('call-trusted-name');
+
+      spanName.innerText = name;
+      btn.href = `tel:${phone.replace(/\D/g, '')}`;
+      container.classList.remove('hidden');
+    }
+  </script>
 </body>
 </html>
