@@ -1,0 +1,72 @@
+/* Estilos focados em acessibilidade extrema para miopia */
+:root {
+  --text-scale: 1.1; /* Escala inicial de texto aumentada */
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Classes de alto contraste customizadas */
+.theme-light {
+  background-color: #FDFBF7; /* Fundo creme suave que cansa menos os olhos */
+  color: #111827;
+}
+
+/* Ajustes MODO ESCURO para sobrepor o Tailwind */
+.theme-dark {
+  background-color: #0F172A !important;
+  color: #F8FAFC !important;
+}
+.theme-dark .bg-white, .theme-dark .bg-slate-50, .theme-dark .bg-gray-100 {
+  background-color: #1E293B !important;
+  color: #F8FAFC !important;
+  border-color: #334155 !important;
+}
+.theme-dark .text-black, .theme-dark .text-gray-700, .theme-dark .text-gray-800, .theme-dark .text-gray-900 {
+  color: #E2E8F0 !important;
+}
+.theme-dark header {
+  background-color: #B45309 !important;
+  border-color: #78350F !important;
+}
+
+/* Ajustes MODO ALTO CONTRASTE (Força bruta sobre o Tailwind) */
+.theme-high-contrast, 
+.theme-high-contrast * {
+  background-color: #000000 !important;
+  color: #FFFF00 !important;
+  border-color: #FFFF00 !important;
+  box-shadow: none !important;
+}
+
+/* Garantir contornos em elementos interativos no Alto Contraste */
+.theme-high-contrast button, 
+.theme-high-contrast a, 
+.theme-high-contrast input,
+.theme-high-contrast .border-4 {
+  border: 3px solid #FFFF00 !important;
+}
+
+/* Foco acessível por teclado */
+*:focus-visible {
+  outline: 4px solid #F59E0B !important;
+  outline-offset: 4px;
+}
+
+/* Toques grandes e confortáveis para mãos trêmulas ou idosos */
+.big-target {
+  min-height: 56px;
+  padding: 14px 24px;
+}
+
+/* Linhas de leitura guiada opcionais */
+.reading-line {
+  border-bottom: 2px dashed #D1D5DB;
+}
+
+/* Transição suave de modais */
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.75);
+}
